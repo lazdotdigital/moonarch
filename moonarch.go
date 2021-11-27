@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 // MoonarchResponse represents a moonarch API response.
@@ -22,8 +23,13 @@ const APIURL = "https://api.moonarch.app"
 
 // Fetch returns a `MoonarchResponse` for the given address.
 func Fetch(address string) (r MoonarchResponse, err error) {
+	// The moonarch API fails to load anything on an invalid address,
+	// so failure must be done via timeout.
+	client := http.Client{
+		Timeout: 5 * time.Second,
+	}
 	url := fmt.Sprintf("%v/1.0/tokens/BSC/details/%v", APIURL, address)
-	res, err := http.Get(url)
+	res, err := client.Get(url)
 	if err != nil {
 		return
 	}
