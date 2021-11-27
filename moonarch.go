@@ -18,7 +18,7 @@ type MoonarchResponse struct {
 
 // APIURL is the base URL that all moonarch API requests
 // originate from.
-const APIURL = "https://api.moonarch.app/"
+const APIURL = "https://api.moonarch.app"
 
 // Fetch returns a `MoonarchResponse` for the given address.
 func Fetch(address string) (r MoonarchResponse, err error) {
